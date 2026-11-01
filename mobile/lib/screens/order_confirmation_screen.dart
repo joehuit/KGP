@@ -57,23 +57,23 @@ class OrderConfirmationScreen extends StatelessWidget {
 
               const SizedBox(height: 16),
 
-              const Text(
+              Text(
                 'تم تسجيل طلبك بنجاح!',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: AppTheme.textPrimary,
+                  color: AppTheme.getTextPrimary(context),
                 ),
               ),
 
               const SizedBox(height: 6),
 
-              const Text(
+              Text(
                 'سيتصل بك فريق مبيعات KGP بلفور لتأكيد الإرسال والتحضير',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 13,
-                  color: AppTheme.textSecondary,
+                  color: AppTheme.getTextSecondary(context),
                 ),
               ),
 
@@ -84,17 +84,21 @@ class OrderConfirmationScreen extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: AppTheme.cardSurface,
+                  color: AppTheme.getCardColor(context),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: AppTheme.primaryLight.withAlpha(100)),
+                  border: Border.all(
+                    color: AppTheme.isDark(context)
+                        ? AppTheme.primaryLight.withAlpha(100)
+                        : AppTheme.primary.withAlpha(100),
+                  ),
                 ),
                 child: Column(
                   children: [
-                    const Text(
+                    Text(
                       'رقم مرجع الطلب (Référence)',
                       style: TextStyle(
                         fontSize: 12,
-                        color: AppTheme.textSecondary,
+                        color: AppTheme.getTextSecondary(context),
                       ),
                     ),
                     const SizedBox(height: 6),
@@ -103,11 +107,13 @@ class OrderConfirmationScreen extends StatelessWidget {
                       children: [
                         Text(
                           order.orderReference,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w900,
                             fontFamily: 'monospace',
-                            color: AppTheme.primaryLight,
+                            color: AppTheme.isDark(context)
+                                ? AppTheme.primaryLight
+                                : AppTheme.primary,
                             letterSpacing: 1.0,
                           ),
                         ),
@@ -127,13 +133,13 @@ class OrderConfirmationScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const Divider(height: 20, color: AppTheme.border),
+                    Divider(height: 20, color: AppTheme.getBorderColor(context)),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                        Text(
                           'حالة الطلب الأولية:',
-                          style: TextStyle(fontSize: 13, color: AppTheme.textSecondary),
+                          style: TextStyle(fontSize: 13, color: AppTheme.getTextSecondary(context)),
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -164,59 +170,61 @@ class OrderConfirmationScreen extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: AppTheme.cardSurface,
+                  color: AppTheme.getCardColor(context),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: AppTheme.border),
+                  border: Border.all(color: AppTheme.getBorderColor(context)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'وجهة التوصيل',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        color: AppTheme.textPrimary,
+                        color: AppTheme.getTextPrimary(context),
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       'العميل: ${order.customerName}',
-                      style: const TextStyle(fontSize: 13, color: AppTheme.textSecondary),
+                      style: TextStyle(fontSize: 13, color: AppTheme.getTextSecondary(context)),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       'الهاتف: ${order.customerPhoneMasked}',
-                      style: const TextStyle(fontSize: 13, color: AppTheme.textSecondary),
+                      style: TextStyle(fontSize: 13, color: AppTheme.getTextSecondary(context)),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       'المنطقة: ${order.wilaya} — ${order.commune}',
-                      style: const TextStyle(fontSize: 13, color: AppTheme.textSecondary),
+                      style: TextStyle(fontSize: 13, color: AppTheme.getTextSecondary(context)),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       'العنوان: ${order.deliveryAddress}',
-                      style: const TextStyle(fontSize: 13, color: AppTheme.textSecondary),
+                      style: TextStyle(fontSize: 13, color: AppTheme.getTextSecondary(context)),
                     ),
-                    const Divider(height: 20, color: AppTheme.border),
+                    Divider(height: 20, color: AppTheme.getBorderColor(context)),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                        Text(
                           'المبلغ الإجمالي:',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: AppTheme.textPrimary,
+                            color: AppTheme.getTextPrimary(context),
                           ),
                         ),
                         Text(
                           CurrencyFormatter.format(order.totalAmount),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.w900,
-                            color: AppTheme.primaryLight,
+                            color: AppTheme.isDark(context)
+                                ? AppTheme.primaryLight
+                                : AppTheme.primary,
                           ),
                         ),
                       ],
@@ -232,9 +240,13 @@ class OrderConfirmationScreen extends StatelessWidget {
                 icon: const Icon(Icons.location_searching_rounded, size: 20),
                 label: const Text('متابعة حالة الطلب مباشرة'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppTheme.cardSurface,
-                  foregroundColor: AppTheme.textPrimary,
-                  side: const BorderSide(color: AppTheme.primaryLight),
+                  backgroundColor: AppTheme.getCardColor(context),
+                  foregroundColor: AppTheme.getTextPrimary(context),
+                  side: BorderSide(
+                    color: AppTheme.isDark(context)
+                        ? AppTheme.primaryLight
+                        : AppTheme.primary,
+                  ),
                 ),
                 onPressed: () {
                   Navigator.push(

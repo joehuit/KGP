@@ -74,9 +74,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               height: 180,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: AppTheme.cardSurface,
+                color: AppTheme.getCardColor(context),
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: AppTheme.border),
+                border: Border.all(color: AppTheme.getBorderColor(context)),
               ),
               child: Center(
                 child: Column(
@@ -90,9 +90,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     const SizedBox(height: 12),
                     Text(
                       product.categoryName ?? 'قطع غيار الهواتف',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 13,
-                        color: AppTheme.textSecondary,
+                        color: AppTheme.getTextSecondary(context),
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -106,10 +106,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             // Product Name
             Text(
               product.name,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: AppTheme.textPrimary,
+                color: AppTheme.getTextPrimary(context),
                 height: 1.3,
               ),
             ),
@@ -122,16 +122,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
-                    color: AppTheme.cardSurface,
+                    color: AppTheme.getCardColor(context),
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: AppTheme.border),
+                    border: Border.all(color: AppTheme.getBorderColor(context)),
                   ),
                   child: Text(
                     'كود القطعة: ${product.sku}',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 12,
                       fontFamily: 'monospace',
-                      color: AppTheme.textSecondary,
+                      color: AppTheme.getTextSecondary(context),
                     ),
                   ),
                 ),
@@ -167,26 +167,26 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppTheme.surface,
+                color: AppTheme.getSurfaceColor(context),
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppTheme.border),
+                border: Border.all(color: AppTheme.getBorderColor(context)),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     'سعر القطعة (TTC):',
                     style: TextStyle(
                       fontSize: 14,
-                      color: AppTheme.textSecondary,
+                      color: AppTheme.getTextSecondary(context),
                     ),
                   ),
                   Text(
                     CurrencyFormatter.format(product.sellingPrice),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w900,
-                      color: AppTheme.primaryLight,
+                      color: AppTheme.isDark(context) ? AppTheme.primaryLight : AppTheme.primary,
                     ),
                   ),
                 ],
@@ -196,12 +196,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             const SizedBox(height: 20),
 
             // Description
-            const Text(
+            Text(
               'تفاصيل القطعة والمواصفات',
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
-                color: AppTheme.textPrimary,
+                color: AppTheme.getTextPrimary(context),
               ),
             ),
             const SizedBox(height: 8),
@@ -209,17 +209,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               width: double.infinity,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppTheme.cardSurface,
+                color: AppTheme.getCardColor(context),
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppTheme.border),
+                border: Border.all(color: AppTheme.getBorderColor(context)),
               ),
               child: Text(
                 product.description != null && product.description!.trim().isNotEmpty
                     ? product.description!
                     : 'قطعة غيار أصلية متوافقة مع موديل الجهاز. تضمن كفاءة عمل عالية ومطابقة لمعايير المصنع.',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13,
-                  color: AppTheme.textSecondary,
+                  color: AppTheme.getTextSecondary(context),
                   height: 1.5,
                 ),
               ),
@@ -229,18 +229,18 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       ),
       bottomNavigationBar: Container(
         padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
-        decoration: const BoxDecoration(
-          color: AppTheme.surface,
-          border: Border(top: BorderSide(color: AppTheme.border)),
+        decoration: BoxDecoration(
+          color: AppTheme.getSurfaceColor(context),
+          border: Border(top: BorderSide(color: AppTheme.getBorderColor(context))),
         ),
         child: Row(
           children: [
             // Quantity Stepper
             Container(
               decoration: BoxDecoration(
-                color: AppTheme.cardSurface,
+                color: AppTheme.getCardColor(context),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppTheme.border),
+                border: Border.all(color: AppTheme.getBorderColor(context)),
               ),
               child: Row(
                 children: [
@@ -250,7 +250,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                   Text(
                     '$_quantity',
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.getTextPrimary(context),
+                    ),
                   ),
                   IconButton(
                     icon: const Icon(Icons.add, size: 16),

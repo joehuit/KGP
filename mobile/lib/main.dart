@@ -5,6 +5,7 @@ import 'core/theme/app_theme.dart';
 import 'providers/cart_provider.dart';
 import 'providers/catalog_provider.dart';
 import 'providers/order_provider.dart';
+import 'providers/theme_provider.dart';
 import 'screens/catalog_screen.dart';
 import 'services/api_service.dart';
 
@@ -16,6 +17,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
         ChangeNotifierProvider(create: (_) => CatalogProvider(apiService: apiService)),
         ChangeNotifierProvider(create: (_) => OrderProvider(apiService: apiService)),
@@ -30,10 +32,14 @@ class KgpListApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = context.watch<ThemeProvider>();
+
     return MaterialApp(
       title: 'KGP LIST — قطع غيار الهواتف بلفور',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.darkTheme,
+      themeMode: themeProvider.themeMode,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
       // Arabic-first RTL configuration
       locale: const Locale('ar', 'DZ'),
       supportedLocales: const [

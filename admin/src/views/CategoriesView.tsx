@@ -117,13 +117,13 @@ export const CategoriesView: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Action Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-sm">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm transition-colors">
         <div>
-          <h3 className="text-base font-bold text-white flex items-center gap-2">
-            <FolderTree className="w-5 h-5 text-brand-400" />
+          <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <FolderTree className="w-5 h-5 text-brand-600 dark:text-brand-400" />
             <span>تصنيفات قطع الغيار (Catégories)</span>
           </h3>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             إدارة الهيكل التصنيفي لقطع الهواتف (شاشات، بطاريات، كونيكتور، كاميرات، أغطية خلفية)
           </p>
         </div>
@@ -131,7 +131,7 @@ export const CategoriesView: React.FC = () => {
         <div className="flex items-center gap-3 w-full sm:w-auto">
           <button
             onClick={fetchCategories}
-            className="p-2.5 rounded-xl border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+            className="p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors"
             title="تحديث"
           >
             <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
@@ -160,33 +160,33 @@ export const CategoriesView: React.FC = () => {
           icon={<FolderTree className="w-10 h-10" />}
         />
       ) : (
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm transition-colors">
           <div className="overflow-x-auto">
             <table className="w-full text-right text-xs">
               <thead>
-                <tr className="bg-slate-950/60 border-b border-slate-800 text-slate-400">
+                <tr className="bg-slate-50 dark:bg-slate-950/60 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400">
                   <th className="py-3.5 pr-5 font-bold">الترتيب</th>
                   <th className="py-3.5 px-4 font-bold">اسم الفئة (Nom)</th>
                   <th className="py-3.5 px-4 font-bold">الحالة</th>
                   <th className="py-3.5 pl-5 font-bold text-left">الإجراءات</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 font-medium">
+              <tbody className="divide-y divide-slate-200 dark:divide-slate-800/60 font-medium">
                 {categories.map((cat) => (
-                  <tr key={cat.id} className="hover:bg-slate-800/40 transition-colors">
-                    <td className="py-3.5 pr-5 font-mono text-slate-400 font-bold">
+                  <tr key={cat.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
+                    <td className="py-3.5 pr-5 font-mono text-slate-500 dark:text-slate-400 font-bold">
                       #{cat.display_order}
                     </td>
-                    <td className="py-3.5 px-4 text-white font-bold text-sm">
+                    <td className="py-3.5 px-4 text-slate-900 dark:text-white font-bold text-sm">
                       {cat.name}
                     </td>
                     <td className="py-3.5 px-4">
                       {cat.is_active ? (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20">
                           مفعلة (Actif)
                         </span>
                       ) : (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-800 text-slate-400 border border-slate-700">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 border border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700">
                           معطلة (Inactif)
                         </span>
                       )}
@@ -196,21 +196,21 @@ export const CategoriesView: React.FC = () => {
                         <div className="flex items-center justify-end gap-2">
                           <button
                             onClick={() => openEditModal(cat)}
-                            className="p-1.5 rounded-lg text-slate-300 hover:text-brand-400 hover:bg-slate-800 transition-colors"
+                            className="p-1.5 rounded-lg text-slate-600 hover:text-brand-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:text-brand-400 dark:hover:bg-slate-800 transition-colors"
                             title="تعديل الفئة"
                           >
                             <Edit2 className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => setDeleteTarget(cat)}
-                            className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-slate-800 transition-colors"
+                            className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:text-slate-400 dark:hover:text-rose-400 dark:hover:bg-slate-800 transition-colors"
                             title="حذف الفئة"
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
                       ) : (
-                        <span className="text-slate-500 text-[11px]">للقراءة فقط</span>
+                        <span className="text-slate-400 dark:text-slate-500 text-[11px]">للقراءة فقط</span>
                       )}
                     </td>
                   </tr>
@@ -223,16 +223,16 @@ export const CategoriesView: React.FC = () => {
 
       {/* Create / Edit Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
-            <h3 className="text-base font-bold text-white mb-4 flex items-center gap-2">
-              <FolderPlus className="w-5 h-5 text-brand-400" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl relative transition-colors">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+              <FolderPlus className="w-5 h-5 text-brand-600 dark:text-brand-400" />
               <span>{editingCategory ? 'تعديل الفئة' : 'إضافة فئة جديدة'}</span>
             </h3>
 
             <form onSubmit={handleSave} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
                   اسم الفئة (بالعربية أو الفرنسية) *
                 </label>
                 <input
@@ -241,12 +241,12 @@ export const CategoriesView: React.FC = () => {
                   onChange={(e) => setName(e.target.value)}
                   placeholder="مثال: Écrans OLED Samsung أو شاشات آيفون"
                   required
-                  className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:border-brand-500"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:border-brand-500"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
                   ترتيب العرض (Ordre d'affichage)
                 </label>
                 <input
@@ -254,7 +254,7 @@ export const CategoriesView: React.FC = () => {
                   value={displayOrder}
                   onChange={(e) => setDisplayOrder(parseInt(e.target.value) || 0)}
                   min="0"
-                  className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-brand-500 font-mono"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:border-brand-500 font-mono"
                 />
               </div>
 
@@ -264,18 +264,18 @@ export const CategoriesView: React.FC = () => {
                   id="cat_active"
                   checked={isActive}
                   onChange={(e) => setIsActive(e.target.checked)}
-                  className="w-4 h-4 rounded border-slate-700 bg-slate-800 text-brand-600 focus:ring-brand-500"
+                  className="w-4 h-4 rounded border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-brand-600 focus:ring-brand-500"
                 />
-                <label htmlFor="cat_active" className="text-xs font-semibold text-slate-300 cursor-pointer">
+                <label htmlFor="cat_active" className="text-xs font-semibold text-slate-700 dark:text-slate-300 cursor-pointer">
                   تفعيل الفئة وإظهارها للزبائن في التطبيق
                 </label>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 rounded-xl border border-slate-700 text-slate-300 text-xs font-medium hover:bg-slate-800 transition-colors"
+                  className="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                 >
                   إلغاء
                 </button>

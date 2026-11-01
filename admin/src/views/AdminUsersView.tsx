@@ -159,13 +159,13 @@ export const AdminUsersView: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-sm">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm transition-colors">
         <div>
-          <h3 className="text-base font-bold text-white flex items-center gap-2">
-            <ShieldCheck className="w-5 h-5 text-brand-400" />
+          <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <ShieldCheck className="w-5 h-5 text-brand-600 dark:text-brand-400" />
             <span>إدارة حسابات المشرفين وصلاحيات RBAC</span>
           </h3>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             صلاحية حصرية للمدير العام (Superadmin) لتعيين المشرفين (Admin) ومشغلي الطلبيات (Operator)
           </p>
         </div>
@@ -173,7 +173,7 @@ export const AdminUsersView: React.FC = () => {
         <div className="flex items-center gap-3 w-full sm:w-auto">
           <button
             onClick={fetchAdmins}
-            className="p-2.5 rounded-xl border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+            className="p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors"
             title="تحديث"
           >
             <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
@@ -200,11 +200,11 @@ export const AdminUsersView: React.FC = () => {
           icon={<ShieldCheck className="w-10 h-10" />}
         />
       ) : (
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm transition-colors">
           <div className="overflow-x-auto">
             <table className="w-full text-right text-xs">
               <thead>
-                <tr className="bg-slate-950/60 border-b border-slate-800 text-slate-400">
+                <tr className="bg-slate-50 dark:bg-slate-950/60 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400">
                   <th className="py-3.5 pr-5 font-bold">المعرف</th>
                   <th className="py-3.5 px-4 font-bold">الاسم الكامل</th>
                   <th className="py-3.5 px-4 font-bold">البريد الإلكتروني</th>
@@ -213,45 +213,45 @@ export const AdminUsersView: React.FC = () => {
                   <th className="py-3.5 pl-5 font-bold text-left">الإجراءات</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 font-medium">
+              <tbody className="divide-y divide-slate-200 dark:divide-slate-800/60 font-medium">
                 {admins.map((adm) => (
-                  <tr key={adm.id} className="hover:bg-slate-800/40 transition-colors">
-                    <td className="py-3.5 pr-5 font-mono text-slate-400 font-bold">
+                  <tr key={adm.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
+                    <td className="py-3.5 pr-5 font-mono text-slate-500 dark:text-slate-400 font-bold">
                       #{adm.id}
                     </td>
-                    <td className="py-3.5 px-4 text-white font-bold text-sm">
+                    <td className="py-3.5 px-4 text-slate-900 dark:text-white font-bold text-sm">
                       {adm.full_name}
                       {adm.id === currentUser?.id && (
-                        <span className="mr-2 text-[10px] text-brand-400 font-normal">
+                        <span className="mr-2 text-[10px] text-brand-600 dark:text-brand-400 font-normal">
                           (حسابك الحالي)
                         </span>
                       )}
                     </td>
-                    <td className="py-3.5 px-4 font-mono text-slate-300 dir-ltr text-right">
+                    <td className="py-3.5 px-4 font-mono text-slate-700 dark:text-slate-300 dir-ltr text-right">
                       {adm.email}
                     </td>
                     <td className="py-3.5 px-4">
                       {adm.role === 'superadmin' ? (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-500/15 text-purple-300 border border-purple-500/30">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-50 text-purple-700 border border-purple-200 dark:bg-purple-500/15 dark:text-purple-300 dark:border-purple-500/30">
                           مدير عام (Superadmin)
                         </span>
                       ) : adm.role === 'admin' ? (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-brand-500/15 text-brand-300 border border-brand-500/30">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-brand-50 text-brand-700 border border-brand-200 dark:bg-brand-500/15 dark:text-brand-300 dark:border-brand-500/30">
                           مدير كتالوج وطلبات (Admin)
                         </span>
                       ) : (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-500/15 dark:text-amber-300 dark:border-amber-500/30">
                           مشغل مستودع (Operator)
                         </span>
                       )}
                     </td>
                     <td className="py-3.5 px-4">
                       {adm.is_active ? (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20">
                           نشط (Actif)
                         </span>
                       ) : (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-500/10 text-rose-400 border border-rose-500/20">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200 dark:bg-rose-500/10 dark:text-rose-400 dark:border-rose-500/20">
                           معطل (Désactivé)
                         </span>
                       )}
@@ -260,7 +260,7 @@ export const AdminUsersView: React.FC = () => {
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => openEditModal(adm)}
-                          className="p-1.5 rounded-lg text-slate-300 hover:text-brand-400 hover:bg-slate-800 transition-colors"
+                          className="p-1.5 rounded-lg text-slate-600 hover:text-brand-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:text-brand-400 dark:hover:bg-slate-800 transition-colors"
                           title="تعديل الحساب"
                         >
                           <Edit2 className="w-4 h-4" />
@@ -270,8 +270,8 @@ export const AdminUsersView: React.FC = () => {
                             onClick={() => toggleAdminStatus(adm)}
                             className={`p-1.5 rounded-lg transition-colors ${
                               adm.is_active
-                                ? 'text-slate-400 hover:text-rose-400 hover:bg-slate-800'
-                                : 'text-slate-400 hover:text-emerald-400 hover:bg-slate-800'
+                                ? 'text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:text-rose-400 dark:hover:bg-slate-800'
+                                : 'text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:text-emerald-400 dark:hover:bg-slate-800'
                             }`}
                             title={adm.is_active ? 'تعطيل الحساب' : 'تفعيل الحساب'}
                           >
@@ -302,16 +302,16 @@ export const AdminUsersView: React.FC = () => {
 
       {/* Create / Edit Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in overflow-y-auto">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl relative my-8">
-            <h3 className="text-base font-bold text-white mb-4 flex items-center gap-2">
-              <UserPlus className="w-5 h-5 text-brand-400" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-sm animate-fade-in overflow-y-auto">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl relative my-8 transition-colors">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+              <UserPlus className="w-5 h-5 text-brand-600 dark:text-brand-400" />
               <span>{editingAdmin ? 'تعديل حساب المشرف' : 'إنشاء حساب مشرف جديد'}</span>
             </h3>
 
             <form onSubmit={handleSave} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
                   الاسم الكامل (Nom & Prénom) *
                 </label>
                 <input
@@ -320,12 +320,12 @@ export const AdminUsersView: React.FC = () => {
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="مثال: يوسف حدجاب"
                   required
-                  className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-xs focus:outline-none focus:border-brand-500"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-xs focus:outline-none focus:border-brand-500"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
                   البريد الإلكتروني (Email) *
                 </label>
                 <input
@@ -334,12 +334,12 @@ export const AdminUsersView: React.FC = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="admin@kgp-list.dz"
                   required
-                  className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-xs focus:outline-none focus:border-brand-500 text-left dir-ltr"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-xs focus:outline-none focus:border-brand-500 text-left dir-ltr"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
                   كلمة المرور {editingAdmin ? '(اتركها فارغة إذا لم ترغب بتغييرها)' : '*'}
                 </label>
                 <input
@@ -349,18 +349,18 @@ export const AdminUsersView: React.FC = () => {
                   placeholder="••••••••••••"
                   required={!editingAdmin}
                   minLength={8}
-                  className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-xs focus:outline-none focus:border-brand-500 text-left dir-ltr"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-xs focus:outline-none focus:border-brand-500 text-left dir-ltr"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
                   الدور الإداري (Rôle RBAC) *
                 </label>
                 <select
                   value={role}
                   onChange={(e) => setRole(e.target.value as AdminRole)}
-                  className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs focus:outline-none focus:border-brand-500"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white text-xs focus:outline-none focus:border-brand-500"
                 >
                   <option value="superadmin">مدير عام (Superadmin) — تحكم كامل ومراقبة</option>
                   <option value="admin">مدير (Admin) — إدارة الكتالوج والأسعار والطلبات</option>
@@ -374,18 +374,18 @@ export const AdminUsersView: React.FC = () => {
                   id="admin_active"
                   checked={isActive}
                   onChange={(e) => setIsActive(e.target.checked)}
-                  className="w-4 h-4 rounded border-slate-700 bg-slate-800 text-brand-600 focus:ring-brand-500"
+                  className="w-4 h-4 rounded border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-brand-600 focus:ring-brand-500"
                 />
-                <label htmlFor="admin_active" className="text-xs font-semibold text-slate-300 cursor-pointer">
+                <label htmlFor="admin_active" className="text-xs font-semibold text-slate-700 dark:text-slate-300 cursor-pointer">
                   الحساب نشط ويمكنه تسجيل الدخول
                 </label>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 rounded-xl border border-slate-700 text-slate-300 text-xs font-medium hover:bg-slate-800 transition-colors"
+                  className="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                 >
                   إلغاء
                 </button>

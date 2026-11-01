@@ -27,7 +27,7 @@ class CartScreen extends StatelessWidget {
                 showDialog(
                   context: context,
                   builder: (ctx) => AlertDialog(
-                    backgroundColor: AppTheme.cardSurface,
+                    backgroundColor: AppTheme.getCardColor(context),
                     title: const Text('إفراغ السلة'),
                     content: const Text('هل أنت متأكد من حذف جميع القطع من السلة؟'),
                     actions: [
@@ -83,9 +83,9 @@ class CartScreen extends StatelessWidget {
                 // Bottom Checkout Bar
                 Container(
                   padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-                  decoration: const BoxDecoration(
-                    color: AppTheme.surface,
-                    border: Border(top: BorderSide(color: AppTheme.border)),
+                  decoration: BoxDecoration(
+                    color: AppTheme.getSurfaceColor(context),
+                    border: Border(top: BorderSide(color: AppTheme.getBorderColor(context))),
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -96,17 +96,19 @@ class CartScreen extends StatelessWidget {
                         children: [
                           Text(
                             'المجموع (${cart.totalItemsCount} قطعة):',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 14,
-                              color: AppTheme.textSecondary,
+                              color: AppTheme.getTextSecondary(context),
                             ),
                           ),
                           Text(
                             CurrencyFormatter.format(cart.totalAmount),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w900,
-                              color: AppTheme.primaryLight,
+                              color: AppTheme.isDark(context)
+                                  ? AppTheme.primaryLight
+                                  : AppTheme.primary,
                             ),
                           ),
                         ],

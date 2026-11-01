@@ -23,9 +23,18 @@ class CartItemTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppTheme.cardSurface,
+        color: AppTheme.getCardColor(context),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppTheme.border),
+        border: Border.all(color: AppTheme.getBorderColor(context)),
+        boxShadow: AppTheme.isDark(context)
+            ? []
+            : [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.04),
+                  blurRadius: 6,
+                  offset: const Offset(0, 2),
+                ),
+              ],
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -35,13 +44,13 @@ class CartItemTile extends StatelessWidget {
             width: 48,
             height: 48,
             decoration: BoxDecoration(
-              color: AppTheme.surface,
+              color: AppTheme.getSurfaceColor(context),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: AppTheme.border),
+              border: Border.all(color: AppTheme.getBorderColor(context)),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.hardware_rounded,
-              color: AppTheme.primaryLight,
+              color: AppTheme.isDark(context) ? AppTheme.primaryLight : AppTheme.primary,
               size: 24,
             ),
           ),
@@ -57,10 +66,10 @@ class CartItemTile extends StatelessWidget {
                   product.name,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
-                    color: AppTheme.textPrimary,
+                    color: AppTheme.getTextPrimary(context),
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -68,18 +77,20 @@ class CartItemTile extends StatelessWidget {
                   children: [
                     Text(
                       product.sku,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 11,
-                        color: AppTheme.textMuted,
+                        color: AppTheme.getTextMuted(context),
                         fontFamily: 'monospace',
                       ),
                     ),
                     const SizedBox(width: 8),
                     Text(
                       '•  ${CurrencyFormatter.format(product.sellingPrice)}',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
-                        color: AppTheme.primaryLight,
+                        color: AppTheme.isDark(context)
+                            ? AppTheme.primaryLight
+                            : AppTheme.primary,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -98,9 +109,9 @@ class CartItemTile extends StatelessWidget {
               // Quantity stepper
               Container(
                 decoration: BoxDecoration(
-                  color: AppTheme.surface,
+                  color: AppTheme.getSurfaceColor(context),
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: AppTheme.border),
+                  border: Border.all(color: AppTheme.getBorderColor(context)),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -117,10 +128,10 @@ class CartItemTile extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 4),
                       child: Text(
                         '${item.quantity}',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
-                          color: AppTheme.textPrimary,
+                          color: AppTheme.getTextPrimary(context),
                         ),
                       ),
                     ),
@@ -141,10 +152,10 @@ class CartItemTile extends StatelessWidget {
               // Total price for line
               Text(
                 CurrencyFormatter.format(item.totalPrice),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
-                  color: AppTheme.textPrimary,
+                  color: AppTheme.getTextPrimary(context),
                 ),
               ),
             ],

@@ -121,29 +121,29 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Sidebar Container */}
       <aside
-        className={`fixed top-0 right-0 z-40 h-full w-72 bg-slate-900 border-l border-slate-800 flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0 ${
+        className={`fixed top-0 right-0 z-40 h-full w-72 bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 flex flex-col transition-all duration-300 ease-in-out lg:translate-x-0 ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         {/* Brand Banner */}
-        <div className="p-5 border-b border-slate-800 flex items-center justify-between">
+        <div className="p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-cyan-400 flex items-center justify-center text-white shadow-lg shadow-brand-900/40">
               <Wrench className="w-6 h-6" />
             </div>
             <div>
-              <h1 className="text-lg font-black tracking-wide text-white flex items-center gap-1.5">
+              <h1 className="text-lg font-black tracking-wide text-slate-900 dark:text-white flex items-center gap-1.5">
                 KGP LIST
-                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-brand-500/20 text-brand-300 border border-brand-500/30">
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-brand-500/15 text-brand-600 dark:text-brand-300 border border-brand-500/30">
                   BELFORT
                 </span>
               </h1>
-              <p className="text-xs text-slate-400">قطع غيار الهواتف الذكية</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">قطع غيار الهواتف الذكية</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="lg:hidden text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800"
+            className="lg:hidden text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
           >
             <X className="w-5 h-5" />
           </button>
@@ -165,7 +165,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-right transition-all font-medium ${
                   active
                     ? 'bg-brand-600 text-white shadow-lg shadow-brand-900/30 font-bold'
-                    : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
+                    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800/80 dark:hover:text-white'
                 }`}
               >
                 <div className="flex items-center gap-3">
@@ -174,7 +174,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     <div className="text-sm">{item.label}</div>
                     <div
                       className={`text-[10px] ${
-                        active ? 'text-brand-100' : 'text-slate-500'
+                        active ? 'text-brand-100' : 'text-slate-400 dark:text-slate-500'
                       }`}
                     >
                       {item.sublabel}
@@ -187,13 +187,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* Footer with User info & Logout */}
-        <div className="p-4 border-t border-slate-800 bg-slate-900/80">
+        <div className="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80">
           <div className="flex items-center justify-between mb-3">
             <div className="truncate">
-              <p className="text-sm font-bold text-white truncate">{user?.full_name}</p>
-              <p className="text-xs text-slate-400 truncate">{user?.email}</p>
+              <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{user?.full_name}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 truncate">{user?.email}</p>
             </div>
-            <span className="text-[11px] px-2 py-0.5 rounded-full font-bold bg-slate-800 border border-slate-700 text-brand-300">
+            <span className="text-[11px] px-2 py-0.5 rounded-full font-bold bg-slate-200 text-slate-700 border border-slate-300 dark:bg-slate-800 dark:border-slate-700 dark:text-brand-300">
               {user?.role === 'superadmin'
                 ? 'Superadmin'
                 : user?.role === 'admin'
@@ -204,7 +204,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
           <button
             onClick={logout}
-            className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-rose-400 hover:bg-rose-500/10 hover:text-rose-300 border border-rose-500/20 text-sm font-semibold transition-colors"
+            className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-rose-600 hover:bg-rose-50 hover:text-rose-700 border border-rose-200 dark:text-rose-400 dark:hover:bg-rose-500/10 dark:hover:text-rose-300 dark:border-rose-500/20 text-sm font-semibold transition-colors"
           >
             <LogOut className="w-4 h-4" />
             <span>تسجيل الخروج (Déconnexion)</span>

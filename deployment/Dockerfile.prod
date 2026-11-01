@@ -1,0 +1,89 @@
+# ==============================================================================
+# Unified Multi-Stage Production Dockerfile for KGP LIST
+# Serves FastAPI Backend + React Admin Dashboard SPA from a Single Container
+# Build Context: Project Root (.)
+# Target Platform: Render Web Service (Docker Runtime)
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# Stage 1: Build React Admin Dashboard SPA (Vite + TypeScript)
+# ------------------------------------------------------------------------------
+FROM node:20-alpine AS admin-builder
+
+WORKDIR /build/admin
+
+# Copy package manifests first for optimal layer caching
+COPY admin/package.json admin/package-lock.json ./
+RUN npm ci
+
+# Copy admin source code, configs, and assets
+COPY admin/ ./
+
+# Compile TypeScript and bundle production assets (emitted to /build/admin/dist)
+RUN npm run build
+
+# ------------------------------------------------------------------------------
+# Stage 2: Build Python Wheels & Dependencies
+# ------------------------------------------------------------------------------
+FROM python:3.11-slim AS python-builder
+
+WORKDIR /build
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY backend/requirements.txt .
+RUN pip install --no-cache-dir --user -r requirements.txt
+
+# ------------------------------------------------------------------------------
+# Stage 3: Production Runner Container
+# ------------------------------------------------------------------------------
+FROM python:3.11-slim AS runner
+
+WORKDIR /app
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PATH="/home/appuser/.local/bin:${PATH}" \
+    PYTHONPATH="/app/backend"
+
+# Install runtime PostgreSQL client library and curl for container health check
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpq5 \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Run as non-privileged user for container security
+RUN groupadd -g 1001 appgroup && \
+    useradd -u 1001 -g appgroup -m -s /bin/bash appuser
+
+# Copy installed Python packages from python-builder
+COPY --from=python-builder /root/.local /home/appuser/.local
+
+# Copy backend application code to /app/backend
+COPY --chown=appuser:appgroup backend /app/backend
+
+# Copy built admin SPA assets from admin-builder to /app/admin/dist
+# Matches Path(__file__).resolve().parent.parent.parent / "admin" / "dist"
+COPY --from=admin-builder --chown=appuser:appgroup /build/admin/dist /app/admin/dist
+
+# Secure file permissions
+RUN chown -R appuser:appgroup /home/appuser/.local /app
+
+USER appuser
+
+WORKDIR /app/backend
+
+EXPOSE 8000
+
+# Container health probe checking backend availability on dynamic port
+HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \
+    CMD curl -f http://localhost:${PORT:-8000}/api/health || exit 1
+
+# Start Uvicorn on 0.0.0.0 with dynamic $PORT (default 8000), single worker, and trusted proxy headers
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1 --proxy-headers --forwarded-allow-ips='*'"]

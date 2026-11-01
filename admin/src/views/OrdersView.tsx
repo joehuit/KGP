@@ -132,21 +132,21 @@ export const OrdersView: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Top Filter Bar */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4 transition-colors">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h3 className="text-base font-bold text-white flex items-center gap-2">
-              <ShoppingCart className="w-5 h-5 text-brand-400" />
+            <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <ShoppingCart className="w-5 h-5 text-brand-600 dark:text-brand-400" />
               <span>إدارة وتتبع طلبيات الزبائن (Commandes)</span>
             </h3>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
               متابعة مراحل تأكيد الطلبات، تحضير قطع الغيار، والشحن للورشات عبر الولايات
             </p>
           </div>
 
           <button
             onClick={fetchOrders}
-            className="p-2.5 rounded-xl border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+            className="p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors"
             title="تحديث"
           >
             <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
@@ -154,7 +154,7 @@ export const OrdersView: React.FC = () => {
         </div>
 
         {/* Status Filters Pills */}
-        <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-800/80">
+        <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-200 dark:border-slate-800/80">
           <button
             onClick={() => {
               setStatusFilter(undefined);
@@ -163,7 +163,7 @@ export const OrdersView: React.FC = () => {
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
               statusFilter === undefined
                 ? 'bg-brand-600 text-white shadow-lg shadow-brand-900/30'
-                : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 dark:border-transparent dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
             }`}
           >
             الكل (Toutes)
@@ -187,7 +187,7 @@ export const OrdersView: React.FC = () => {
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                 statusFilter === st
                   ? 'bg-brand-600 text-white shadow-lg shadow-brand-900/30'
-                  : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                  : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 dark:border-transparent dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
               }`}
             >
               {getStatusLabel(st)}
@@ -206,11 +206,11 @@ export const OrdersView: React.FC = () => {
           icon={<ShoppingCart className="w-10 h-10" />}
         />
       ) : (
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm transition-colors">
           <div className="overflow-x-auto">
             <table className="w-full text-right text-xs">
               <thead>
-                <tr className="bg-slate-950/60 border-b border-slate-800 text-slate-400">
+                <tr className="bg-slate-50 dark:bg-slate-950/60 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400">
                   <th className="py-3.5 pr-5 font-bold">المرجع (Référence)</th>
                   <th className="py-3.5 px-4 font-bold">التاريخ والتوقيت</th>
                   <th className="py-3.5 px-4 font-bold">معرف الزبون</th>
@@ -220,13 +220,13 @@ export const OrdersView: React.FC = () => {
                   <th className="py-3.5 pl-5 font-bold text-left">التفاصيل</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 font-medium">
+              <tbody className="divide-y divide-slate-200 dark:divide-slate-800/60 font-medium">
                 {orders.map((ord) => (
-                  <tr key={ord.id} className="hover:bg-slate-800/40 transition-colors">
-                    <td className="py-3.5 pr-5 font-mono text-white font-bold">
+                  <tr key={ord.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
+                    <td className="py-3.5 pr-5 font-mono text-slate-900 dark:text-white font-bold">
                       {ord.order_reference}
                     </td>
-                    <td className="py-3.5 px-4 text-slate-400 font-mono">
+                    <td className="py-3.5 px-4 text-slate-500 dark:text-slate-400 font-mono">
                       {new Date(ord.created_at).toLocaleDateString('fr-DZ', {
                         year: 'numeric',
                         month: 'short',
@@ -235,13 +235,13 @@ export const OrdersView: React.FC = () => {
                         minute: '2-digit',
                       })}
                     </td>
-                    <td className="py-3.5 px-4 text-slate-300 font-mono">
+                    <td className="py-3.5 px-4 text-slate-700 dark:text-slate-300 font-mono">
                       #{ord.customer_id}
                     </td>
-                    <td className="py-3.5 px-4 text-slate-300">
+                    <td className="py-3.5 px-4 text-slate-700 dark:text-slate-300">
                       {ord.items?.length || 0} قطع
                     </td>
-                    <td className="py-3.5 px-4 font-bold text-emerald-400 text-sm">
+                    <td className="py-3.5 px-4 font-bold text-emerald-600 dark:text-emerald-400 text-sm">
                       {formatPrice(ord.total_amount)} د.ج
                     </td>
                     <td className="py-3.5 px-4">
@@ -250,7 +250,7 @@ export const OrdersView: React.FC = () => {
                     <td className="py-3.5 pl-5 text-left">
                       <button
                         onClick={() => setSelectedOrder(ord)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-brand-300 text-xs font-semibold transition-colors"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-brand-700 dark:text-brand-300 border border-slate-200 dark:border-transparent text-xs font-semibold transition-colors"
                       >
                         <Eye className="w-3.5 h-3.5" />
                         <span>معاينة الفاتورة</span>
@@ -274,24 +274,24 @@ export const OrdersView: React.FC = () => {
 
       {/* Order Details Drawer / Modal */}
       {selectedOrder && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in overflow-y-auto">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative my-8">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-sm animate-fade-in overflow-y-auto">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative my-8 transition-colors">
             <button
               onClick={() => setSelectedOrder(null)}
-              className="absolute left-6 top-6 text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800"
+              className="absolute left-6 top-6 text-slate-400 hover:text-slate-700 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800 p-1 rounded-lg transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
 
             {/* Header info */}
-            <div className="border-b border-slate-800 pb-5 mb-5">
+            <div className="border-b border-slate-200 dark:border-slate-800 pb-5 mb-5">
               <div className="flex items-center gap-3 mb-2">
-                <span className="font-mono text-xl font-black text-white">
+                <span className="font-mono text-xl font-black text-slate-900 dark:text-white">
                   {selectedOrder.order_reference}
                 </span>
                 <OrderStatusBadge status={selectedOrder.status} />
               </div>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 تم تقديم الطلب بتاريخ:{' '}
                 {new Date(selectedOrder.created_at).toLocaleString('fr-DZ')}
               </p>
@@ -299,20 +299,20 @@ export const OrdersView: React.FC = () => {
 
             {/* Customer & Notes */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-              <div className="p-4 rounded-2xl bg-slate-950/60 border border-slate-800">
-                <span className="text-xs font-bold text-slate-400 block mb-1">
+              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800">
+                <span className="text-xs font-bold text-slate-500 dark:text-slate-400 block mb-1">
                   معلومات الزبون (Client)
                 </span>
-                <div className="text-sm font-bold text-white">
+                <div className="text-sm font-bold text-slate-900 dark:text-white">
                   معرف الزبون: #{selectedOrder.customer_id}
                 </div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-slate-950/60 border border-slate-800">
-                <span className="text-xs font-bold text-slate-400 block mb-1">
+              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800">
+                <span className="text-xs font-bold text-slate-500 dark:text-slate-400 block mb-1">
                   ملاحظات الزبون (Notes)
                 </span>
-                <div className="text-xs text-slate-300">
+                <div className="text-xs text-slate-700 dark:text-slate-300">
                   {selectedOrder.customer_notes || 'لا توجد ملاحظات إضافية'}
                 </div>
               </div>
@@ -320,13 +320,13 @@ export const OrdersView: React.FC = () => {
 
             {/* Line Items Table with Historical Snapshots */}
             <div className="mb-6">
-              <h5 className="text-xs font-bold text-slate-300 mb-3">
+              <h5 className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-3">
                 تفاصيل البنود والأسعار المسجلة تاريخياً (Lignes de commande)
               </h5>
-              <div className="bg-slate-950/80 rounded-2xl border border-slate-800 overflow-hidden">
+              <div className="bg-slate-50 dark:bg-slate-950/80 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
                 <table className="w-full text-right text-xs">
                   <thead>
-                    <tr className="border-b border-slate-800 text-slate-400 bg-slate-900/60">
+                    <tr className="border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-900/60">
                       <th className="py-2.5 pr-4 font-bold">كود القطعة</th>
                       <th className="py-2.5 px-3 font-bold">اسم القطعة والموديل</th>
                       <th className="py-2.5 px-3 font-bold">سعر الوحدة</th>
@@ -334,31 +334,31 @@ export const OrdersView: React.FC = () => {
                       <th className="py-2.5 pl-4 font-bold text-left">المجموع</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800 font-medium">
+                  <tbody className="divide-y divide-slate-200 dark:divide-slate-800 font-medium">
                     {selectedOrder.items?.map((it) => (
                       <tr key={it.id}>
-                        <td className="py-2.5 pr-4 font-mono text-brand-300 font-bold">
+                        <td className="py-2.5 pr-4 font-mono text-brand-600 dark:text-brand-300 font-bold">
                           {it.product_sku}
                         </td>
-                        <td className="py-2.5 px-3 text-white">{it.product_name}</td>
-                        <td className="py-2.5 px-3 font-mono text-slate-300">
+                        <td className="py-2.5 px-3 text-slate-900 dark:text-white">{it.product_name}</td>
+                        <td className="py-2.5 px-3 font-mono text-slate-700 dark:text-slate-300">
                           {formatPrice(it.unit_price)} د.ج
                         </td>
-                        <td className="py-2.5 px-3 font-bold text-white">
+                        <td className="py-2.5 px-3 font-bold text-slate-900 dark:text-white">
                           &times; {it.quantity}
                         </td>
-                        <td className="py-2.5 pl-4 text-left font-bold text-emerald-400 font-mono">
+                        <td className="py-2.5 pl-4 text-left font-bold text-emerald-600 dark:text-emerald-400 font-mono">
                           {formatPrice(it.total_price)} د.ج
                         </td>
                       </tr>
                     ))}
                   </tbody>
                   <tfoot>
-                    <tr className="bg-slate-900/80 border-t border-slate-800 font-bold text-sm">
-                      <td colSpan={4} className="py-3 pr-4 text-white">
+                    <tr className="bg-slate-100 dark:bg-slate-900/80 border-t border-slate-200 dark:border-slate-800 font-bold text-sm">
+                      <td colSpan={4} className="py-3 pr-4 text-slate-900 dark:text-white">
                         المجموع الإجمالي للطلب (Total TTC):
                       </td>
-                      <td className="py-3 pl-4 text-left text-emerald-400 font-mono text-base font-black">
+                      <td className="py-3 pl-4 text-left text-emerald-600 dark:text-emerald-400 font-mono text-base font-black">
                         {formatPrice(selectedOrder.total_amount)} د.ج
                       </td>
                     </tr>
@@ -369,8 +369,8 @@ export const OrdersView: React.FC = () => {
 
             {/* State Machine Action Controls */}
             {canUpdateOrders && (
-              <div className="border-t border-slate-800 pt-5">
-                <span className="text-xs font-bold text-slate-400 block mb-2">
+              <div className="border-t border-slate-200 dark:border-slate-800 pt-5">
+                <span className="text-xs font-bold text-slate-600 dark:text-slate-400 block mb-2">
                   تحديث حالة الطلب (Changer le statut):
                 </span>
                 <div className="flex flex-wrap gap-2">
@@ -385,7 +385,7 @@ export const OrdersView: React.FC = () => {
                       }
                       className={`px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-md ${
                         nxt === 'CANCELLED'
-                          ? 'bg-rose-600/20 text-rose-300 border border-rose-500/30 hover:bg-rose-600 hover:text-white'
+                          ? 'bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-600 hover:text-white dark:bg-rose-600/20 dark:text-rose-300 dark:border-rose-500/30 dark:hover:bg-rose-600 dark:hover:text-white'
                           : 'bg-brand-600 hover:bg-brand-500 text-white shadow-brand-900/30'
                       }`}
                     >

@@ -30,22 +30,22 @@ class ErrorView extends StatelessWidget {
               child: const Icon(Icons.wifi_off_rounded, size: 48, color: AppTheme.error),
             ),
             const SizedBox(height: 16),
-            const Text(
+            Text(
               'تعذر الاتصال بالخادم',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: AppTheme.textPrimary,
+                color: AppTheme.getTextPrimary(context),
               ),
             ),
             const SizedBox(height: 8),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 13,
-                color: AppTheme.textSecondary,
+                color: AppTheme.getTextSecondary(context),
                 height: 1.4,
               ),
             ),
@@ -87,9 +87,9 @@ class LoadingView extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             message,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 13,
-              color: AppTheme.textSecondary,
+              color: AppTheme.getTextSecondary(context),
             ),
           ),
         ],

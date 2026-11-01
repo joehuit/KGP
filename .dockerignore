@@ -1,0 +1,68 @@
+# ==============================================================================
+# .dockerignore for KGP LIST Production Multi-Stage Docker Build
+# Context: Project Root (.)
+# ==============================================================================
+
+# Version control
+.git
+.gitignore
+
+# Environment variables & secrets (CRITICAL: never bake into image)
+.env
+.env.local
+.env.*
+!.env.example
+!.env.prod.example
+*.pem
+*.key
+*.cert
+*.crt
+id_rsa
+id_ecdsa
+id_ed25519
+firebase-service-account*.json
+google-services.json
+GoogleService-Info.plist
+.neon
+
+# Node & Admin artifacts (built freshly inside Docker stage 1)
+node_modules/
+*/node_modules/
+admin/dist/
+admin/build/
+admin/.vite/
+.npm/
+
+# Python byte-code, virtual environments, and caches
+__pycache__/
+*/__pycache__/
+*/*/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+.pytest_cache/
+.coverage
+htmlcov/
+pytestdebug.log
+
+# Local databases and runtime state
+*.sqlite
+*.sqlite3
+*.db
+*.log
+database/data/
+pgdata/
+
+# Mobile application (not needed in web container)
+mobile/
+.dart_tool/
+
+# Temporary / OS / Editor files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

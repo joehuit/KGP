@@ -198,14 +198,14 @@ export const ProductsView: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Top Action & Search Bar */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4 transition-colors">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h3 className="text-base font-bold text-white flex items-center gap-2">
-              <Boxes className="w-5 h-5 text-brand-400" />
+            <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <Boxes className="w-5 h-5 text-brand-600 dark:text-brand-400" />
               <span>كتالوج قطع الغيار والأسعار (Pièces détachées)</span>
             </h3>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
               قائمة الشاشات والبطاريات وقطع الغيار مع كود SKU، المخزون، والأسعار بالدينار الجزائري
             </p>
           </div>
@@ -213,7 +213,7 @@ export const ProductsView: React.FC = () => {
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <button
               onClick={fetchProducts}
-              className="p-2.5 rounded-xl border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+              className="p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors"
               title="تحديث"
             >
               <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
@@ -232,7 +232,7 @@ export const ProductsView: React.FC = () => {
         </div>
 
         {/* Filters Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-3 pt-2 border-t border-slate-800/80">
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-3 pt-2 border-t border-slate-200 dark:border-slate-800/80">
           {/* Search Input */}
           <form onSubmit={handleSearchSubmit} className="sm:col-span-2 relative">
             <input
@@ -240,11 +240,11 @@ export const ProductsView: React.FC = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="ابحث بكود القطعة SKU أو اسم الموديل (مثال: OLED A51)..."
-              className="w-full pl-10 pr-4 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-xs focus:outline-none focus:border-brand-500"
+              className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-xs focus:outline-none focus:border-brand-500"
             />
             <button
               type="submit"
-              className="absolute left-2.5 top-2.5 text-slate-400 hover:text-white"
+              className="absolute left-2.5 top-2.5 text-slate-400 hover:text-slate-700 dark:hover:text-white"
             >
               <Search className="w-4 h-4" />
             </button>
@@ -258,7 +258,7 @@ export const ProductsView: React.FC = () => {
                 setSelectedCategory(e.target.value ? parseInt(e.target.value) : undefined);
                 setPage(1);
               }}
-              className="w-full px-3 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-white text-xs focus:outline-none focus:border-brand-500"
+              className="w-full px-3 py-2.5 bg-slate-50 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white text-xs focus:outline-none focus:border-brand-500"
             >
               <option value="">جميع الفئات والتصنيفات</option>
               {categories.map((c) => (
@@ -270,7 +270,7 @@ export const ProductsView: React.FC = () => {
           </div>
 
           {/* Active status filter */}
-          <div className="flex items-center gap-2 px-3 py-2 bg-slate-800/40 rounded-xl border border-slate-700/60">
+          <div className="flex items-center gap-2 px-3 py-2 bg-slate-100/60 dark:bg-slate-800/40 rounded-xl border border-slate-200 dark:border-slate-700/60">
             <input
               type="checkbox"
               id="active_filter"
@@ -279,9 +279,9 @@ export const ProductsView: React.FC = () => {
                 setActiveOnly(e.target.checked);
                 setPage(1);
               }}
-              className="w-4 h-4 rounded border-slate-700 bg-slate-800 text-brand-600 focus:ring-brand-500"
+              className="w-4 h-4 rounded border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-brand-600 focus:ring-brand-500"
             />
-            <label htmlFor="active_filter" className="text-xs text-slate-300 font-medium cursor-pointer">
+            <label htmlFor="active_filter" className="text-xs text-slate-700 dark:text-slate-300 font-medium cursor-pointer">
               القطع المفعلة فقط
             </label>
           </div>
@@ -299,11 +299,11 @@ export const ProductsView: React.FC = () => {
           icon={<Boxes className="w-10 h-10" />}
         />
       ) : (
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm transition-colors">
           <div className="overflow-x-auto">
             <table className="w-full text-right text-xs">
               <thead>
-                <tr className="bg-slate-950/60 border-b border-slate-800 text-slate-400">
+                <tr className="bg-slate-50 dark:bg-slate-950/60 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400">
                   <th className="py-3.5 pr-5 font-bold">كود القطعة (SKU)</th>
                   <th className="py-3.5 px-4 font-bold">اسم القطعة والموديل</th>
                   <th className="py-3.5 px-4 font-bold">سعر البيع (DZD)</th>
@@ -312,44 +312,44 @@ export const ProductsView: React.FC = () => {
                   <th className="py-3.5 pl-5 font-bold text-left">الإجراءات</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 font-medium">
+              <tbody className="divide-y divide-slate-200 dark:divide-slate-800/60 font-medium">
                 {products.map((prod) => (
-                  <tr key={prod.id} className="hover:bg-slate-800/40 transition-colors">
-                    <td className="py-3.5 pr-5 font-mono text-brand-400 font-bold">
+                  <tr key={prod.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
+                    <td className="py-3.5 pr-5 font-mono text-brand-600 dark:text-brand-400 font-bold">
                       {prod.sku}
                     </td>
                     <td className="py-3.5 px-4">
-                      <div className="text-white font-bold text-sm">{prod.name}</div>
+                      <div className="text-slate-900 dark:text-white font-bold text-sm">{prod.name}</div>
                       {prod.description && (
-                        <div className="text-[11px] text-slate-400 truncate max-w-xs">
+                        <div className="text-[11px] text-slate-500 dark:text-slate-400 truncate max-w-xs">
                           {prod.description}
                         </div>
                       )}
                     </td>
-                    <td className="py-3.5 px-4 font-bold text-emerald-400 text-sm">
+                    <td className="py-3.5 px-4 font-bold text-emerald-600 dark:text-emerald-400 text-sm">
                       {formatPrice(prod.selling_price)}{' '}
-                      <span className="text-[10px] text-slate-400">د.ج</span>
+                      <span className="text-[10px] text-slate-500 dark:text-slate-400">د.ج</span>
                     </td>
                     <td className="py-3.5 px-4">
                       {prod.available_quantity === null ? (
-                        <span className="text-slate-500 font-mono">غير محدد</span>
+                        <span className="text-slate-400 dark:text-slate-500 font-mono">غير محدد</span>
                       ) : prod.available_quantity <= 5 ? (
-                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-500/15 dark:text-amber-300 dark:border-amber-500/30">
                           {prod.available_quantity} قطع (منخفض)
                         </span>
                       ) : (
-                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-slate-800 text-slate-200 border border-slate-700">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-700 border border-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-700">
                           {prod.available_quantity} قطع
                         </span>
                       )}
                     </td>
                     <td className="py-3.5 px-4">
                       {prod.is_active ? (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20">
                           معروض (Actif)
                         </span>
                       ) : (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-800 text-slate-400 border border-slate-700">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 border border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700">
                           مخفي (Inactif)
                         </span>
                       )}
@@ -359,21 +359,21 @@ export const ProductsView: React.FC = () => {
                         <div className="flex items-center justify-end gap-2">
                           <button
                             onClick={() => openEditModal(prod)}
-                            className="p-1.5 rounded-lg text-slate-300 hover:text-brand-400 hover:bg-slate-800 transition-colors"
+                            className="p-1.5 rounded-lg text-slate-600 hover:text-brand-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:text-brand-400 dark:hover:bg-slate-800 transition-colors"
                             title="تعديل القطعة"
                           >
                             <Edit2 className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => setDeleteTarget(prod)}
-                            className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-slate-800 transition-colors"
+                            className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:text-slate-400 dark:hover:text-rose-400 dark:hover:bg-slate-800 transition-colors"
                             title="حذف أو تعطيل القطعة"
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
                       ) : (
-                        <span className="text-slate-500 text-[11px]">للقراءة فقط</span>
+                        <span className="text-slate-400 dark:text-slate-500 text-[11px]">للقراءة فقط</span>
                       )}
                     </td>
                   </tr>
@@ -394,17 +394,17 @@ export const ProductsView: React.FC = () => {
 
       {/* Create / Edit Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in overflow-y-auto">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative my-8">
-            <h3 className="text-base font-bold text-white mb-4 flex items-center gap-2">
-              <Boxes className="w-5 h-5 text-brand-400" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-sm animate-fade-in overflow-y-auto">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative my-8 transition-colors">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+              <Boxes className="w-5 h-5 text-brand-600 dark:text-brand-400" />
               <span>{editingProduct ? 'تعديل قطعة غيار' : 'إضافة قطعة غيار جديدة'}</span>
             </h3>
 
             <form onSubmit={handleSave} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
                     كود القطعة الفريد (SKU) *
                   </label>
                   <input
@@ -413,19 +413,19 @@ export const ProductsView: React.FC = () => {
                     onChange={(e) => setSku(e.target.value.toUpperCase())}
                     placeholder="مثال: OLED-SAM-A51"
                     required
-                    className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-xs focus:outline-none focus:border-brand-500 font-mono uppercase"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-xs focus:outline-none focus:border-brand-500 font-mono uppercase"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
                     الفئة والتصنيف *
                   </label>
                   <select
                     value={categoryId}
                     onChange={(e) => setCategoryId(parseInt(e.target.value))}
                     required
-                    className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs focus:outline-none focus:border-brand-500"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white text-xs focus:outline-none focus:border-brand-500"
                   >
                     {categories.map((c) => (
                       <option key={c.id} value={c.id}>
@@ -437,7 +437,7 @@ export const ProductsView: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
                   اسم القطعة والموديل التجاري *
                 </label>
                 <input
@@ -446,13 +446,13 @@ export const ProductsView: React.FC = () => {
                   onChange={(e) => setName(e.target.value)}
                   placeholder="مثال: Écran OLED Samsung Galaxy A51 (Original Service Pack)"
                   required
-                  className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-xs focus:outline-none focus:border-brand-500"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-xs focus:outline-none focus:border-brand-500"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
                     سعر البيع بالدينار الجزائري (DZD) *
                   </label>
                   <input
@@ -462,12 +462,12 @@ export const ProductsView: React.FC = () => {
                     value={sellingPrice}
                     onChange={(e) => setSellingPrice(e.target.value)}
                     required
-                    className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs focus:outline-none focus:border-brand-500 font-mono font-bold text-emerald-400"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white text-xs focus:outline-none focus:border-brand-500 font-mono font-bold text-emerald-600 dark:text-emerald-400"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
                     الكمية المتوفرة بالمخزون (Stock)
                   </label>
                   <input
@@ -476,13 +476,13 @@ export const ProductsView: React.FC = () => {
                     value={availableQuantity}
                     onChange={(e) => setAvailableQuantity(e.target.value)}
                     placeholder="فارغ للكمية غير المحددة"
-                    className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white text-xs focus:outline-none focus:border-brand-500 font-mono"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white text-xs focus:outline-none focus:border-brand-500 font-mono"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
                   ملاحظات أو مواصفات تقنية (Description)
                 </label>
                 <textarea
@@ -490,7 +490,7 @@ export const ProductsView: React.FC = () => {
                   onChange={(e) => setDescription(e.target.value)}
                   rows={3}
                   placeholder="درجة الجودة، المورد، التوافق، نوع الشاشة..."
-                  className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 text-xs focus:outline-none focus:border-brand-500"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-xs focus:outline-none focus:border-brand-500"
                 />
               </div>
 
@@ -500,18 +500,18 @@ export const ProductsView: React.FC = () => {
                   id="prod_active"
                   checked={isActive}
                   onChange={(e) => setIsActive(e.target.checked)}
-                  className="w-4 h-4 rounded border-slate-700 bg-slate-800 text-brand-600 focus:ring-brand-500"
+                  className="w-4 h-4 rounded border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-brand-600 focus:ring-brand-500"
                 />
-                <label htmlFor="prod_active" className="text-xs font-semibold text-slate-300 cursor-pointer">
+                <label htmlFor="prod_active" className="text-xs font-semibold text-slate-700 dark:text-slate-300 cursor-pointer">
                   تفعيل ظهور القطعة في تطبيق الزبائن
                 </label>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 rounded-xl border border-slate-700 text-slate-300 text-xs font-medium hover:bg-slate-800 transition-colors"
+                  className="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                 >
                   إلغاء
                 </button>

@@ -103,19 +103,19 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppTheme.cardSurface,
+                color: AppTheme.getCardColor(context),
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppTheme.border),
+                border: Border.all(color: AppTheme.getBorderColor(context)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'أدخل رمز تتبع الطلب (Code de suivi)',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
-                      color: AppTheme.textPrimary,
+                      color: AppTheme.getTextPrimary(context),
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -162,12 +162,12 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
             ] else ...[
               // Recent orders stored on device
               if (savedOrders.isNotEmpty) ...[
-                const Text(
+                Text(
                   'طلباتك السابقة على هذا الهاتف',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
-                    color: AppTheme.textPrimary,
+                    color: AppTheme.getTextPrimary(context),
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -192,9 +192,9 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                       child: Container(
                         padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
-                          color: AppTheme.cardSurface,
+                          color: AppTheme.getCardColor(context),
                           borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: AppTheme.border),
+                          border: Border.all(color: AppTheme.getBorderColor(context)),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -204,19 +204,21 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                               children: [
                                 Text(
                                   ref,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
                                     fontFamily: 'monospace',
-                                    color: AppTheme.primaryLight,
+                                    color: AppTheme.isDark(context)
+                                        ? AppTheme.primaryLight
+                                        : AppTheme.primary,
                                   ),
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
                                   CurrencyFormatter.format(total),
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 12,
-                                    color: AppTheme.textSecondary,
+                                    color: AppTheme.getTextSecondary(context),
                                   ),
                                 ),
                               ],
@@ -265,9 +267,9 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppTheme.cardSurface,
+        color: AppTheme.getCardColor(context),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppTheme.border),
+        border: Border.all(color: AppTheme.getBorderColor(context)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -279,14 +281,14 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('مرجع الطلب:', style: TextStyle(fontSize: 11, color: AppTheme.textMuted)),
+                  Text('مرجع الطلب:', style: TextStyle(fontSize: 11, color: AppTheme.getTextMuted(context))),
                   Text(
                     order.orderReference,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'monospace',
-                      color: AppTheme.primaryLight,
+                      color: AppTheme.isDark(context) ? AppTheme.primaryLight : AppTheme.primary,
                     ),
                   ),
                 ],
@@ -312,15 +314,15 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
             ],
           ),
 
-          const Divider(height: 24, color: AppTheme.border),
+          Divider(height: 24, color: AppTheme.getBorderColor(context)),
 
           // Items Snapshot
-          const Text(
+          Text(
             'القطع المطلوبة:',
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.bold,
-              color: AppTheme.textPrimary,
+              color: AppTheme.getTextPrimary(context),
             ),
           ),
           const SizedBox(height: 8),
@@ -334,30 +336,34 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                   Expanded(
                     child: Text(
                       '${it.quantity}x ${it.productName}',
-                      style: const TextStyle(fontSize: 12, color: AppTheme.textSecondary),
+                      style: TextStyle(fontSize: 12, color: AppTheme.getTextSecondary(context)),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   Text(
                     CurrencyFormatter.format(it.totalPrice),
-                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.getTextPrimary(context),
+                    ),
                   ),
                 ],
               ),
             );
           }),
 
-          const Divider(height: 24, color: AppTheme.border),
+          Divider(height: 24, color: AppTheme.getBorderColor(context)),
 
           // Destination
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('الوجهة:', style: TextStyle(fontSize: 12, color: AppTheme.textMuted)),
+              Text('الوجهة:', style: TextStyle(fontSize: 12, color: AppTheme.getTextMuted(context))),
               Text(
                 '${order.wilaya} — ${order.commune}',
-                style: const TextStyle(fontSize: 12, color: AppTheme.textSecondary),
+                style: TextStyle(fontSize: 12, color: AppTheme.getTextSecondary(context)),
               ),
             ],
           ),
@@ -365,10 +371,10 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('الهاتف:', style: TextStyle(fontSize: 12, color: AppTheme.textMuted)),
+              Text('الهاتف:', style: TextStyle(fontSize: 12, color: AppTheme.getTextMuted(context))),
               Text(
                 order.customerPhoneMasked,
-                style: const TextStyle(fontSize: 12, color: AppTheme.textSecondary),
+                style: TextStyle(fontSize: 12, color: AppTheme.getTextSecondary(context)),
               ),
             ],
           ),
@@ -376,16 +382,20 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 'المجموع الكلي:',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.getTextPrimary(context),
+                ),
               ),
               Text(
                 CurrencyFormatter.format(order.totalAmount),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w900,
-                  color: AppTheme.primaryLight,
+                  color: AppTheme.isDark(context) ? AppTheme.primaryLight : AppTheme.primary,
                 ),
               ),
             ],

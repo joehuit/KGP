@@ -136,15 +136,19 @@ class _GuestCheckoutScreenState extends State<GuestCheckoutScreen> {
                   border: Border.all(color: AppTheme.primary.withAlpha(75)),
                 ),
                 child: Row(
-                  children: const [
-                    Icon(Icons.flash_on_rounded, color: AppTheme.primaryLight, size: 24),
-                    SizedBox(width: 12),
+                  children: [
+                    Icon(
+                      Icons.flash_on_rounded,
+                      color: AppTheme.isDark(context) ? AppTheme.primaryLight : AppTheme.primary,
+                      size: 24,
+                    ),
+                    const SizedBox(width: 12),
                     Expanded(
                       child: Text(
                         'طلب مباشر وسريع بدون إنشاء حساب أو كلمة سر. أدخل معلومات التوصيل فقط.',
                         style: TextStyle(
                           fontSize: 12,
-                          color: AppTheme.textPrimary,
+                          color: AppTheme.getTextPrimary(context),
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -156,12 +160,12 @@ class _GuestCheckoutScreenState extends State<GuestCheckoutScreen> {
               const SizedBox(height: 24),
 
               // Section: Contact & Delivery Info
-              const Text(
+              Text(
                 'معلومات الاتصال والتوصيل',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: AppTheme.textPrimary,
+                  color: AppTheme.getTextPrimary(context),
                 ),
               ),
               const SizedBox(height: 16),
@@ -212,7 +216,7 @@ class _GuestCheckoutScreenState extends State<GuestCheckoutScreen> {
               DropdownButtonFormField<String>(
                 value: _selectedWilaya,
                 isExpanded: true,
-                dropdownColor: AppTheme.cardSurface,
+                dropdownColor: AppTheme.getCardColor(context),
                 decoration: const InputDecoration(
                   labelText: 'الولاية *',
                   prefixIcon: Icon(Icons.location_city_rounded, color: AppTheme.textMuted),
@@ -289,19 +293,19 @@ class _GuestCheckoutScreenState extends State<GuestCheckoutScreen> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: AppTheme.cardSurface,
+                  color: AppTheme.getCardColor(context),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: AppTheme.border),
+                  border: Border.all(color: AppTheme.getBorderColor(context)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'ملخص الطلب',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        color: AppTheme.textPrimary,
+                        color: AppTheme.getTextPrimary(context),
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -310,50 +314,54 @@ class _GuestCheckoutScreenState extends State<GuestCheckoutScreen> {
                       children: [
                         Text(
                           'عدد القطع المطلوبة:',
-                          style: const TextStyle(fontSize: 13, color: AppTheme.textSecondary),
+                          style: TextStyle(fontSize: 13, color: AppTheme.getTextSecondary(context)),
                         ),
                         Text(
                           '${cart.totalItemsCount} قطع',
-                          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                            color: AppTheme.getTextPrimary(context),
+                          ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 8),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
+                      children: [
                         Text(
                           'طريقة الدفع:',
-                          style: TextStyle(fontSize: 13, color: AppTheme.textSecondary),
+                          style: TextStyle(fontSize: 13, color: AppTheme.getTextSecondary(context)),
                         ),
                         Text(
                           'نقداً عند الاستلام (Main à main)',
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
-                            color: AppTheme.primaryLight,
+                            color: AppTheme.isDark(context) ? AppTheme.primaryLight : AppTheme.primary,
                           ),
                         ),
                       ],
                     ),
-                    const Divider(height: 20, color: AppTheme.border),
+                    Divider(height: 20, color: AppTheme.getBorderColor(context)),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                        Text(
                           'المجموع الكلي:',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: AppTheme.textPrimary,
+                            color: AppTheme.getTextPrimary(context),
                           ),
                         ),
                         Text(
                           CurrencyFormatter.format(cart.totalAmount),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w900,
-                            color: AppTheme.primaryLight,
+                            color: AppTheme.isDark(context) ? AppTheme.primaryLight : AppTheme.primary,
                           ),
                         ),
                       ],

@@ -32,14 +32,14 @@ class CategoryChips extends StatelessWidget {
               selected: isSelected,
               onSelected: (_) => onSelected(null),
               selectedColor: AppTheme.primary,
-              backgroundColor: AppTheme.cardSurface,
+              backgroundColor: AppTheme.getCardColor(context),
               labelStyle: TextStyle(
-                color: isSelected ? Colors.white : AppTheme.textSecondary,
+                color: isSelected ? Colors.white : AppTheme.getTextSecondary(context),
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 fontSize: 12,
               ),
               side: BorderSide(
-                color: isSelected ? AppTheme.primary : AppTheme.border,
+                color: isSelected ? AppTheme.primary : AppTheme.getBorderColor(context),
               ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -55,14 +55,14 @@ class CategoryChips extends StatelessWidget {
             selected: isSelected,
             onSelected: (_) => onSelected(cat.id),
             selectedColor: AppTheme.primary,
-            backgroundColor: AppTheme.cardSurface,
+            backgroundColor: AppTheme.getCardColor(context),
             labelStyle: TextStyle(
-              color: isSelected ? Colors.white : AppTheme.textSecondary,
+              color: isSelected ? Colors.white : AppTheme.getTextSecondary(context),
               fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
               fontSize: 12,
             ),
             side: BorderSide(
-              color: isSelected ? AppTheme.primary : AppTheme.border,
+              color: isSelected ? AppTheme.primary : AppTheme.getBorderColor(context),
             ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),

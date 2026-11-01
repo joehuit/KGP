@@ -28,12 +28,21 @@ class ProductCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           child: Container(
             decoration: BoxDecoration(
-              color: AppTheme.cardSurface,
+              color: AppTheme.getCardColor(context),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: inCart ? AppTheme.primary : AppTheme.border,
+                color: inCart ? AppTheme.primary : AppTheme.getBorderColor(context),
                 width: inCart ? 1.5 : 1.0,
               ),
+              boxShadow: AppTheme.isDark(context)
+                  ? []
+                  : [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.04),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
             ),
             padding: const EdgeInsets.all(12),
             child: Column(
@@ -49,8 +58,8 @@ class ProductCard extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: product.isInStock
-                            ? AppTheme.success.withAlpha(30)
-                            : AppTheme.error.withAlpha(30),
+                            ? AppTheme.success.withAlpha(AppTheme.isDark(context) ? 30 : 25)
+                            : AppTheme.error.withAlpha(AppTheme.isDark(context) ? 30 : 25),
                         borderRadius: BorderRadius.circular(6),
                         border: Border.all(
                           color: product.isInStock
@@ -71,14 +80,16 @@ class ProductCard extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
-                        color: Colors.black26,
+                        color: AppTheme.isDark(context)
+                            ? Colors.black26
+                            : Colors.black.withOpacity(0.05),
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Text(
                         product.sku,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 10,
-                          color: AppTheme.textMuted,
+                          color: AppTheme.getTextMuted(context),
                           fontFamily: 'monospace',
                         ),
                       ),
@@ -94,10 +105,10 @@ class ProductCard extends StatelessWidget {
                     product.name,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
-                      color: AppTheme.textPrimary,
+                      color: AppTheme.getTextPrimary(context),
                       height: 1.3,
                     ),
                   ),
@@ -116,10 +127,12 @@ class ProductCard extends StatelessWidget {
                       children: [
                         Text(
                           CurrencyFormatter.format(product.sellingPrice),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w900,
-                            color: AppTheme.primaryLight,
+                            color: AppTheme.isDark(context)
+                                ? AppTheme.primaryLight
+                                : AppTheme.primary,
                           ),
                         ),
                       ],
@@ -147,13 +160,17 @@ class ProductCard extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           decoration: BoxDecoration(
                             color: product.isInStock
-                                ? (inCart ? AppTheme.primary : AppTheme.surface)
-                                : AppTheme.border.withAlpha(50),
+                                ? (inCart
+                                    ? AppTheme.primary
+                                    : (AppTheme.isDark(context)
+                                        ? AppTheme.getSurfaceColor(context)
+                                        : AppTheme.primary.withOpacity(0.08)))
+                                : AppTheme.getBorderColor(context).withAlpha(50),
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
                               color: product.isInStock
-                                  ? (inCart ? AppTheme.primary : AppTheme.primaryLight)
-                                  : AppTheme.border,
+                                  ? (inCart ? AppTheme.primary : AppTheme.primary)
+                                  : AppTheme.getBorderColor(context),
                             ),
                           ),
                           child: Row(
@@ -162,10 +179,24 @@ class ProductCard extends StatelessWidget {
                               Icon(
                                 inCart ? Icons.check : Icons.add_shopping_cart,
                                 size: 14,
-                                color: product.isInStock ? Colors.white : AppTheme.textMuted,
+                                color: product.isInStock
+                                    ? (inCart
+                                        ? Colors.white
+                                        : (AppTheme.isDark(context)
+                                            ? Colors.white
+                                            : AppTheme.primary))
+                                    : AppTheme.getTextMuted(context),
                               ),
                               if (inCart) ...[
                                 const SizedBox(width: 4),
+                                const Text(
+                                  '',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
                                 Text(
                                   '$cartQty',
                                   style: const TextStyle(
