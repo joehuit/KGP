@@ -109,3 +109,4 @@ admin/build/
 admin/dist/
 admin/.vite/
 .npm/
+.neon

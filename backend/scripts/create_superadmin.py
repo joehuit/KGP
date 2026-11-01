@@ -97,7 +97,34 @@ def main():
 
     args = parser.parse_args()
 
-    # 1. Resolve email
+    # 0. Display Target Database Context
+    from urllib.parse import urlparse
+    from app.core.config import settings
+
+    parsed_url = urlparse(settings.sync_database_url)
+    db_host = parsed_url.hostname or "unknown"
+    is_neon = "neon.tech" in db_host
+    print("=" * 60)
+    print("=== KGP LIST: Superadmin Provisioning Utility ===")
+    print("=" * 60)
+    print(f"Target Database Host: {db_host}")
+    print(f"Target Neon Cloud:   {'YES (Production)' if is_neon else 'NO'}")
+    print(f"Target Branch:       {settings.NEON_BRANCH or 'N/A'}")
+    print("-" * 60)
+
+    # 1. Check if a Superadmin already exists
+    with SessionLocal() as session:
+        existing_superadmin = session.scalar(
+            select(AdminUser).where(AdminUser.role == AdminRole.SUPERADMIN.value)
+        )
+        if existing_superadmin:
+            print(f"[!] Notice: An existing Superadmin was detected ({existing_superadmin.email}).")
+            resp = input("Do you wish to continue creating or updating a Superadmin account? (y/N): ").strip().lower()
+            if resp not in ("y", "yes"):
+                print("Operation aborted by user.")
+                sys.exit(0)
+
+    # 2. Resolve email
     email = args.email
     while not email:
         try:
@@ -107,14 +134,24 @@ def main():
             print(f"[!] Error: {e}")
             email = None
 
-    # 2. Resolve Full Name
+    # Check if this specific email already exists
+    with SessionLocal() as session:
+        existing_user = session.scalar(select(AdminUser).where(AdminUser.email == email))
+        if existing_user:
+            print(f"[!] Warning: An account with email '{email}' already exists with role '{existing_user.role}'.")
+            confirm = input(f"Are you sure you want to promote/update '{email}' to Superadmin? (y/N): ").strip().lower()
+            if confirm not in ("y", "yes"):
+                print("Operation aborted by user.")
+                sys.exit(0)
+
+    # 3. Resolve Full Name
     full_name = args.name
     while not full_name or not full_name.strip():
         full_name = input("Superadmin Full Name: ").strip()
         if not full_name:
             print("[!] Full name cannot be empty.")
 
-    # 3. Resolve Password securely
+    # 4. Resolve Password securely
     password = None
     if args.password_env:
         password = os.environ.get(args.password_env)
@@ -149,7 +186,7 @@ def main():
         )
         print(f"[✓] Superadmin account successfully configured: {user.email}")
         print(f"[✓] Role: {user.role} | Active: {user.is_active}")
-        print("[✓] You can now log into the Admin Dashboard at http://localhost:8000/admin/")
+        print("[✓] You can now log into the Admin Dashboard at /admin/")
     except Exception as exc:
         print(f"[!] Failed to provision Superadmin: {exc}")
         sys.exit(1)

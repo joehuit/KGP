@@ -21,7 +21,7 @@ if "postgresql" in settings.sync_database_url or "postgres" in settings.sync_dat
     engine_kwargs.update({
         "pool_size": settings.DB_POOL_SIZE,
         "max_overflow": settings.DB_MAX_OVERFLOW,
-        "connect_args": {"connect_timeout": 3},
+        "connect_args": {"connect_timeout": 10},
     })
 
 engine = create_engine(settings.sync_database_url, **engine_kwargs)

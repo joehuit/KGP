@@ -1,16 +1,29 @@
 """Centralized application configuration using Pydantic Settings."""
 
 import json
+from pathlib import Path
 from typing import Any, List, Literal, Optional, Union
 from pydantic import Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+_backend_dir = Path(__file__).resolve().parent.parent.parent
+_project_root = _backend_dir.parent
+_env_files = tuple(
+    str(p)
+    for p in (
+        _project_root / ".env",
+        _project_root / ".env.local",
+        _backend_dir / ".env",
+        _backend_dir / ".env.local",
+    )
+)
 
 
 class Settings(BaseSettings):
     """Production-ready application settings loaded from environment variables."""
 
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=_env_files,
         env_file_encoding="utf-8",
         case_sensitive=True,
         extra="ignore",
@@ -55,6 +68,8 @@ class Settings(BaseSettings):
     POSTGRES_PASSWORD: str = "kgp_secret_password_change_me"
     POSTGRES_DB: str = "kgp_db"
     DATABASE_URL: Union[str, None] = None
+    DATABASE_URL_UNPOOLED: Union[str, None] = None
+    NEON_BRANCH: Union[str, None] = None
 
     # Connection pool configuration
     DB_POOL_SIZE: int = 10
@@ -87,7 +102,7 @@ class Settings(BaseSettings):
         """Return the effective SQLAlchemy synchronous connection string."""
         if self.DATABASE_URL:
             # If standard postgresql:// is provided, normalize to postgresql+psycopg://
-            url = str(self.DATABASE_URL)
+            url = str(self.DATABASE_URL).strip().strip("'\"")
             if url.startswith("postgresql://"):
                 url = url.replace("postgresql://", "postgresql+psycopg://", 1)
             elif url.startswith("postgres://"):
@@ -97,6 +112,19 @@ class Settings(BaseSettings):
             f"postgresql+psycopg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@"
             f"{self.POSTGRES_SERVER}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
         )
+
+    @property
+    def sync_unpooled_database_url(self) -> str:
+        """Return the unpooled SQLAlchemy synchronous connection string (for Alembic DDL migrations)."""
+        url = self.DATABASE_URL_UNPOOLED or self.DATABASE_URL
+        if url:
+            url = str(url).strip().strip("'\"")
+            if url.startswith("postgresql://"):
+                url = url.replace("postgresql://", "postgresql+psycopg://", 1)
+            elif url.startswith("postgres://"):
+                url = url.replace("postgres://", "postgresql+psycopg://", 1)
+            return url
+        return self.sync_database_url
 
     @model_validator(mode="after")
     def validate_production_security(self) -> "Settings":
